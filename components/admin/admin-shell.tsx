@@ -1,16 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard,
   Receipt,
   Nfc,
   FileText,
   Home,
+  LogOut,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { YahabWordmark } from '@/components/yahab/logo'
+import { adminLogout } from '@/lib/admin-auth'
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -21,6 +23,12 @@ const NAV = [
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  function handleLogout() {
+    adminLogout()
+    router.push('/admin/login')
+  }
 
   return (
     <div className="flex min-h-dvh bg-background">
@@ -53,13 +61,24 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             )
           })}
         </nav>
-        <Link
-          href="/"
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#c4c6d2] transition-colors hover:bg-[#232a4d] hover:text-white"
-        >
-          <Home className="h-4 w-4" />
-          Donor site
-        </Link>
+
+        {/* Bottom section */}
+        <div className="flex flex-col gap-1 border-t border-[#2a3155] pt-3">
+          <Link
+            href="/"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#c4c6d2] transition-colors hover:bg-[#232a4d] hover:text-white"
+          >
+            <Home className="h-4 w-4" />
+            Donor site
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#c4c6d2] transition-colors hover:bg-[#232a4d] hover:text-signal"
+          >
+            <LogOut className="h-4 w-4" />
+            Log out
+          </button>
+        </div>
       </aside>
 
       {/* Mobile top nav */}
@@ -87,6 +106,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 </Link>
               )
             })}
+            {/* Mobile logout */}
+            <button
+              onClick={handleLogout}
+              aria-label="Log out"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-ink transition-colors hover:bg-ink-tint-10 hover:text-signal"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
           </nav>
         </header>
 
