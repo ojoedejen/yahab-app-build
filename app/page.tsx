@@ -12,12 +12,6 @@ export default function HomePage() {
           <YahabWordmark />
           <nav className="flex items-center gap-2">
             <Link
-              href="/admin"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-ink-tint-10"
-            >
-              Admin
-            </Link>
-            <Link
               href="/give"
               className="rounded-lg bg-signal px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#ad2a28]"
             >
